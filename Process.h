@@ -8,11 +8,13 @@ class Process{
     public:
         Process();
         Process(int, string, int, int);
+        bool done = false;
         int priority;
         string PID;
         int burstTime;
         int arrivalTime;
-        
+        int allocatedBurstTime;
+        void run();
 };
 
 #endif

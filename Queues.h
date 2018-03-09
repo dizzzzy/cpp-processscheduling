@@ -3,10 +3,18 @@
 #include "Queue.h"
 
 class Queues{
+    private:
+        Queue* Q1; //active queue
+        Queue* Q2; //expired queu
     public:
         Queues();
-        Queue Q1;
-        Queue Q2;
+        Queue* getActiveQueue();
+        Queue* getExpiredQueue();
+        void start();
+        void sort();
+        void setActiveQueue(Queue*);
+        void setExpiredQueue(Queue*);
+        void switchActiveQueue();
 };
 
 #endif
