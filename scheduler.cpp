@@ -10,19 +10,20 @@
 #include "Queues.h"
 using namespace std;
 
-int main () {
+int main() {
   string line;
   ifstream myfile ("input.txt");
   Queues qz; //queues
-  Queue* Q1= new Queue(true);
-  Queue* Q2= new Queue(false);
+  Queue* Q0 = new Queue(false); //waiting queue
+  Queue* Q1= new Queue(true); //active queue
+  Queue* Q2= new Queue(false); //expired queue
   if (myfile.is_open())
   {
     for (int i= 0; getline (myfile,line); i++)
     {
       if(i == 0){
       }else{
-        cout << line << '\n';
+        //cout << line << '\n';
         char * cstr = new char [line.length()+1];
         strcpy(cstr, line.c_str());
 
@@ -40,17 +41,18 @@ int main () {
           }
           if(j== 2){
             process->burstTime = stoi(string(p));
-            process->allocatedBurstTime = 50;
+            process->allocatedBurstTime = 1000;
           }
           if(j== 3){
             process->priority = stoi(string(p));
           }
-          std::cout << p << '\n';
+          //std::cout << p << '\n';
           p = strtok(NULL," ");
         }
-        Q1->processQueue.push_back(* process);
+        Q0->processQueue.push_back(* process);
       }
     }
+    qz.setWaitingQueue(Q0);
     qz.setActiveQueue(Q1);
     qz.setExpiredQueue(Q2);
     myfile.close();

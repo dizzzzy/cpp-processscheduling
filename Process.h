@@ -1,8 +1,9 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 #include <string>
+#include <chrono>
 using namespace std;
-
+using namespace std::chrono;
 
 class Process{
     public:
@@ -14,7 +15,7 @@ class Process{
         int burstTime;
         int arrivalTime;
         int allocatedBurstTime;
-        void run();
+        void run(steady_clock::time_point);
 };
 
 #endif
