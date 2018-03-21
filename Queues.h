@@ -16,12 +16,10 @@ class Queues{
         Queue* getActiveQueue();
         Queue* getExpiredQueue();
         void start();
-        void feedActiveQueue(steady_clock::time_point);
-        void sort();
+        void feedExpiredQueue(steady_clock::time_point);
         void setWaitingQueue(Queue*);
         void setActiveQueue(Queue*);
         void setExpiredQueue(Queue*);
-        void switchActiveQueue();
 };
 
 #endif

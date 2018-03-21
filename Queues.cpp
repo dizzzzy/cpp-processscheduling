@@ -31,12 +31,7 @@ Queue* Queues::getExpiredQueue(){
 }
 
 
-void Queues::sort(){
-    Q1->sort();
-    Q2->sort();
-}
-
-void Queues::feedActiveQueue(steady_clock::time_point t1){ //need to pass in currentTime
+void Queues::feedExpiredQueue(steady_clock::time_point t1){ //need to pass in currentTime
     Queue* qActive = getActiveQueue();
     Queue* qWaiting = getWaitingQueue();
     //clock_t t1 = clock();
@@ -47,21 +42,16 @@ void Queues::feedActiveQueue(steady_clock::time_point t1){ //need to pass in cur
             int64_t current_time = duration_cast<std::chrono::milliseconds>(t2 - t1).count();
             //cout<< current_time <<endl;
             if(current_time> qWaiting->processQueue[i].arrivalTime){
-                
                 //------race condition #1 ----- SHOULD USE MUTEX
                 mu.lock();
-                //putting things into active queue
-                Queue* qActive = getActiveQueue();
-                qActive->processQueue.push_back(qWaiting->processQueue[i]);
+                //putting things into expired queue
+                Queue* qExpired = getExpiredQueue();
+                qExpired->processQueue.push_back(qWaiting->processQueue[i]);
                 cout<<"Time "<< current_time <<", " << qWaiting->processQueue[i].PID 
                     << ", Arrived"<< endl;
                 qWaiting->processQueue.pop_front();
                 mu.unlock();
-                
-
-                //push it into active queue
-               // qExpired->processQueue.push_back(qActive->processQueue[0]);  //Feed other queues
-               // qActive->processQueue.pop_front();
+                //----------------------------
             }
         }
     }
@@ -75,16 +65,29 @@ void Queues::start(){
     Queue* qActive = getActiveQueue();
     Queue* qExpired = getExpiredQueue();
     bool doneTasks = false;
+    string previousProcess = "";
     //sortWaiting();
     steady_clock::time_point t1 = steady_clock::now();
-    std::thread t(&Queues::feedActiveQueue, this, t1);
+    std::thread t(&Queues::feedExpiredQueue, this, t1);
     t.detach();
-    while(!doneTasks){
-        
+    steady_clock::time_point t2 = steady_clock::now();
+    int64_t current_time = duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+    while(current_time < 1000){ //Scheduler has to wait for a second before starting to run tasks
+        t2 = steady_clock::now();
+        current_time = duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+        //cout<< current_time << endl; test waiting for 1 second
+    }
+    while(!doneTasks ){
         while(!qActive->processQueue.empty()){
-            qActive->processQueue[0].run(t1);
-            //std::thread firstThread (q->processQueue[0].run);
-            //firstThread.join();
+            
+            if( previousProcess == qActive->processQueue[0].PID){
+                //it has ran twice in a row
+                previousProcess = "";//reset the previousProcess
+                qActive->processQueue[0].run(t1, true);//true is has ran 
+            }else{ //it has NOT ran twice
+                previousProcess = qActive->processQueue[0].PID;
+                qActive->processQueue[0].run(t1, false);//retain previous run
+            }
             if(qActive->processQueue[0].done){ //process has no more time to run 
                 qActive->processQueue.pop_front();
                 //cout<< 
@@ -100,6 +103,7 @@ void Queues::start(){
             //no more taks to run
             doneTasks = true;
         }else if(!qExpired->processQueue.empty() && qActive->processQueue.empty()){ //swap queues
+            qExpired->sort();
             qActive->active = false;
             qExpired->active = true;
             Queue* temp = qActive;
@@ -134,6 +138,3 @@ void Queues::setExpiredQueue(Queue* expiredQueue){
     Q2 = expiredQueue;
 }
 
-void Queues::switchActiveQueue(){
-    this->sort();
-}

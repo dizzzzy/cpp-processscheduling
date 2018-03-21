@@ -40,8 +40,9 @@ int main() {
             process->arrivalTime = stoi(string(p));
           }
           if(j== 2){
-            process->burstTime = stoi(string(p));
-            process->allocatedBurstTime = 1000;
+            process->remainingTime = stoi(string(p));
+            process->burstTime = process->remainingTime;
+            process->timeQuantum = 1000;
           }
           if(j== 3){
             process->priority = stoi(string(p));
