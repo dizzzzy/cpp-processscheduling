@@ -1,3 +1,4 @@
+%%------------------------------------------------------------------------------------------
 This test case tests out the priority update functionality after 2
 consecutive passes.
 
@@ -9,14 +10,19 @@ P3 3200 100 120
 
 %%------------------------------------------------------------------------------------------
 This test case tests out the sorting of the priorities.
-P1 will get its priority updated to 100 and then get pushed into
+P1 will get its priority updated to 100 and then gets pushed into
 the expired queue with P2. P2 will be on the top of the stack:
+
+    Expired Queue
 ------------------------
     P2 (priority = 95)
 ------------------------
     P1 (priority = 100)
 ------------------------
+
 After the sorting, the expired queue will look like:
+
+    Expired Queue
 ------------------------
     P1 (priority = 100)
 ------------------------
