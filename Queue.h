@@ -7,7 +7,7 @@ class Queue{
     public:
         Queue();
         Queue(bool);
-        std::deque<Process> processQueue; 
+        std::deque<Process*> processQueue; 
         bool active;
         void sort();
 };

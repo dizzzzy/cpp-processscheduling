@@ -8,15 +8,18 @@ ofstream outputFile; //outputFile definition
 Process::Process(){}
 
 void Process::run(steady_clock::time_point t1, bool successiveRun){
+
     if(this->priority < 100){
         this->timeQuantum = (140 - this->priority) * 20;
     }else{
         this->timeQuantum = (140 - this->priority) * 5;
     }
+
     steady_clock::time_point t2 = steady_clock::now();
     int64_t current_time = duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+
     if(this->timeQuantum >= this->remainingTime){
-        this->waitingTime = current_time - arrivalTime - (burstTime - remainingTime);
+        this->waitingTime = current_time - arrivalTime - (burstTime - remainingTime); // calculate total waiting time
         if(!this->started){
             outputFile<<"Time "<< current_time <<", " << this->PID<< ", Started, Granted "<< this->remainingTime<< endl;
             cout<<"Time "<< current_time <<", " << this->PID<< ", Started, Granted "<< this->remainingTime<< endl;
@@ -49,8 +52,9 @@ void Process::run(steady_clock::time_point t1, bool successiveRun){
         outputFile<<"Time "<< current_time <<", " << this->PID<< ", Paused "<< endl;
         cout<<"Time "<< current_time <<", " << this->PID<< ", Paused "<< endl;
         this->remainingTime -= this->timeQuantum;
+        cout<<"Time "<< current_time <<", " << this->PID<< ", Remaining Time: "<< this->remainingTime << endl;
     }   
-    //this->passes += 1;
+
     if(successiveRun && !this->done){
         int bonus = ceil((this->waitingTime * 10)/(current_time - this->arrivalTime));
         cout<< "Bonus: "<< bonus<< endl;

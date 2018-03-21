@@ -51,7 +51,7 @@ int main() {
           //std::cout << p << '\n';
           p = strtok(NULL," ");
         }
-        Q0->processQueue.push_back(* process);
+        Q0->processQueue.push_back(process);
       }
     }
     qz.setWaitingQueue(Q0);
