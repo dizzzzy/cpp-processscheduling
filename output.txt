@@ -1,0 +1,18 @@
+Time 1001, P1, Arrived
+Time 1001, P1, Started, Granted 1000
+Time 2001, P1, Paused 
+Time 2001, P1, Resumed, Granted 1000
+Time 2051, P2, Arrived
+Time 3001, P1, Paused 
+Time 3001, P1, priority updated to 100
+Time 3001, P2, Started, Granted 100
+Time 3101, P2, Terminated 
+Time 3101, P1, Resumed, Granted 200
+Time 3201, P3, Arrived
+Time 3301, P1, Paused 
+Time 3301, P3, Started, Granted 100
+Time 3402, P3, Terminated 
+Time 3402, P1, Resumed, Granted 200
+Time 3602, P1, Paused 
+Time 3602, P1, Resumed, Granted 100
+Time 3702, P1, Terminated 

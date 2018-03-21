@@ -1,5 +1,5 @@
 #ifndef QUEUES_H
-#define QUEUES_HsetWaitingQueue
+#define QUEUES_H
 #include "Queue.h"
 #include <mutex>
 using namespace std::chrono;

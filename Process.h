@@ -2,8 +2,11 @@
 #define PROCESS_H
 #include <string>
 #include <chrono>
+#include <fstream>
 using namespace std;
 using namespace std::chrono;
+
+extern ofstream outputFile; //outPutFile declaration
 
 class Process{
     public:

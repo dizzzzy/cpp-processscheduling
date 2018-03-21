@@ -47,8 +47,8 @@ void Queues::feedExpiredQueue(steady_clock::time_point t1){ //need to pass in cu
                 //putting things into expired queue
                 Queue* qExpired = getExpiredQueue();
                 qExpired->processQueue.push_back(qWaiting->processQueue[i]);
-                cout<<"Time "<< current_time <<", " << qWaiting->processQueue[i].PID 
-                    << ", Arrived"<< endl;
+                outputFile<<"Time "<< current_time <<", " << qWaiting->processQueue[i].PID<< ", Arrived"<< endl;
+                cout<<"Time "<< current_time <<", " << qWaiting->processQueue[i].PID<< ", Arrived"<< endl;
                 qWaiting->processQueue.pop_front();
                 mu.unlock();
                 //----------------------------
@@ -56,7 +56,7 @@ void Queues::feedExpiredQueue(steady_clock::time_point t1){ //need to pass in cu
         }
     }
     // if (int i =0; i < qWaiting->processQueue.size; i++){
-    bool temp = false;
+   // bool temp = false;
     // }
 }
 

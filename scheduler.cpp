@@ -10,9 +10,11 @@
 #include "Queues.h"
 using namespace std;
 
+
 int main() {
   string line;
   ifstream myfile ("input.txt");
+  outputFile.open("output.txt");
   Queues qz; //queues
   Queue* Q0 = new Queue(false); //waiting queue
   Queue* Q1= new Queue(true); //active queue
@@ -63,7 +65,7 @@ int main() {
   }
 
   qz.start();
-  
+  outputFile.close();
   getchar();
   return 0;
 }
