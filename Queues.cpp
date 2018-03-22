@@ -49,7 +49,7 @@ void Queues::feedExpiredQueue(steady_clock::time_point t1){ //need to pass in cu
                 qExpired->processQueue.push_back(qWaiting->processQueue[i]);
                 outputFile<<"Time "<< current_time <<", " << qWaiting->processQueue[i]->PID<< ", Arrived"<< endl;
                 cout<<"Time "<< current_time <<", " << qWaiting->processQueue[i]->PID<< ", Arrived"<< endl;
-                qWaiting->processQueue.pop_front();
+                qWaiting->processQueue.erase(qWaiting->processQueue.begin() + i); //you shouldnt always pop the front because it wont always be pos 0
                 mu.unlock();
                 //----------------------------
             }
@@ -104,7 +104,7 @@ void Queues::start(){
             //no more taks to run
             doneTasks = true;
         }else if(!qExpired->processQueue.empty() && qActive->processQueue.empty()){ //swap queues
-            qExpired->sort();
+            //qExpired->sort();
             qActive->active = false;
             qExpired->active = true;
             Queue* temp = qActive;

@@ -1,5 +1,4 @@
 Time 800, P1, Arrived
-Time 800, P1, Arrived
 Time 1000, P1, Started, Granted 1000
 Time 2000, P1, Paused 
 Time 2000, P1, Resumed, Granted 1000
@@ -9,11 +8,21 @@ Time 3000, P1, priority updated to 100
 Time 3000, P2, Started, Granted 100
 Time 3100, P2, Terminated 
 Time 3100, P1, Resumed, Granted 200
-Time 3301, P1, Paused 
-Time 3301, P1, Resumed, Granted 200
-Time 3501, P1, Paused 
-Time 3501, P1, priority updated to 104
-Time 3501, P1, Resumed, Granted 100
-Time 3601, P1, Terminated 
-Time 3602, P1, Resumed, Granted 100
-Time 3702, P1, Terminated 
+Time 3200, P3, Arrived
+Time 3300, P1, Paused 
+Time 3300, P3, Started, Granted 100
+Time 3400, P3, Terminated 
+Time 3400, P1, Resumed, Granted 200
+Time 3600, P1, Paused 
+Time 3600, P1, Resumed, Granted 100
+Time 3700, P1, Terminated 
+Time 4300, P4, Arrived
+Time 4300, P4, Started, Granted 100
+Time 4400, P4, Paused 
+Time 4400, P4, Resumed, Granted 100
+Time 4500, P4, Paused 
+Time 4500, P4, priority updated to 125
+Time 4500, P4, Resumed, Granted 75
+Time 4576, P4, Paused 
+Time 4576, P4, Resumed, Granted 25
+Time 4601, P4, Terminated 
