@@ -9,7 +9,7 @@ Process::Process(){}
 
 void Process::run(steady_clock::time_point t1, bool successiveRun){
 
-    if(this->priority < 100){
+    if(this->priority < 100){   //calculates time quantum to run for
         this->timeQuantum = (140 - this->priority) * 20;
     }else{
         this->timeQuantum = (140 - this->priority) * 5;
@@ -55,7 +55,7 @@ void Process::run(steady_clock::time_point t1, bool successiveRun){
         cout<<"Time "<< current_time <<", " << this->PID<< ", Remaining Time: "<< this->remainingTime << endl;
     }   
 
-    if(successiveRun && !this->done){
+    if(successiveRun && !this->done){ //updates priority if it has ran twice in a row
         int bonus = ceil((this->waitingTime * 10)/(current_time - this->arrivalTime));
         cout<< "Bonus: "<< bonus<< endl;
         this->priority = max(100, min(this->priority - bonus + 5, 139));

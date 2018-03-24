@@ -34,8 +34,6 @@ Queue* Queues::getExpiredQueue(){
 void Queues::feedExpiredQueue(steady_clock::time_point t1){ //need to pass in currentTime
     Queue* qActive = getActiveQueue();
     Queue* qWaiting = getWaitingQueue();
-    //clock_t t1 = clock();
-    //system_clock::time_point t1 = now();
     while(qWaiting->processQueue.size() != 0 ){
         for(int i=0; i< qWaiting->processQueue.size(); i++){
             steady_clock::time_point t2 = steady_clock::now();
@@ -55,9 +53,7 @@ void Queues::feedExpiredQueue(steady_clock::time_point t1){ //need to pass in cu
             }
         }
     }
-    // if (int i =0; i < qWaiting->processQueue.size; i++){
-   // bool temp = false;
-    // }
+
 }
 
 void Queues::start(){
@@ -66,7 +62,6 @@ void Queues::start(){
     Queue* qExpired = getExpiredQueue();
     bool doneTasks = false;
     string previousProcess = "";
-    //sortWaiting();
     steady_clock::time_point t1 = steady_clock::now();
     std::thread t(&Queues::feedExpiredQueue, this, t1);
     t.detach();
@@ -104,7 +99,7 @@ void Queues::start(){
             //no more taks to run
             doneTasks = true;
         }else if(!qExpired->processQueue.empty() && qActive->processQueue.empty()){ //swap queues
-            //qExpired->sort();
+            qExpired->sort();
             qActive->active = false;
             qExpired->active = true;
             Queue* temp = qActive;
